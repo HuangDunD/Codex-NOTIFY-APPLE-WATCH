@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/hcy/.codex/hooks/codex-stop-wrapper.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/hcy/.codex/hooks/codex-reminder-hook.sh cancel-all",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

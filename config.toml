@@ -1,0 +1,56 @@
+notify = ["/Users/hcy/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"\\/Users\\/hcy\\/.codex\\/hooks\\/codex-notify-wrapper.sh\"]"]
+
+[projects."/Users/hcy/D/postgresql-16.2-fastlog"]
+trust_level = "trusted"
+
+[projects."/Users/hcy/Documents/Codex/2026-06-05/https-zhuanlan-zhihu-com-p-624075600"]
+trust_level = "trusted"
+
+[projects."/Users/hcy/Documents/Codex/2026-06-05/files-mentioned-by-the-user-s"]
+trust_level = "trusted"
+
+[projects."/Users/hcy/Documents/Codex/2026-06-07/https-arxiv-org-pdf-2605-20466"]
+trust_level = "trusted"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 1
+
+[marketplaces.openai-bundled]
+last_updated = "2026-06-08T04:31:28Z"
+source_type = "local"
+source = "/Users/hcy/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[features]
+js_repl = false
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[mcp_servers.node_repl]
+type = "stdio"
+command = "/Applications/Codex.app/Contents/Resources/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+CODEX_HOME = "/Users/hcy/.codex"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = ""
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "0b0d41e7a14a4903d2f95b0b3f427ed796b12c8edca2fa392a03df43997075ae"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/hcy/.codex"
+
+[hooks.state]
+
+[hooks.state."/Users/hcy/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:1933410fd111450d0001bbc10db2a6b08a160c2c3010a01b379abeff4635ab15"
+
+[hooks.state."/Users/hcy/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:ed8b82af97b7a4c12cc8e42683c3b55d6a3ce91e6f86f21b722050a492159f79"
