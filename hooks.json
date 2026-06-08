@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/hcy/.codex/hooks/codex-stop-wrapper.sh",
+            "command": "/bin/zsh -lc \"$HOME/.codex/hooks/codex-stop-wrapper.sh\"",
             "timeout": 10
           }
         ]
@@ -16,7 +16,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/hcy/.codex/hooks/codex-reminder-hook.sh cancel-all",
+            "command": "/bin/zsh -lc \"$HOME/.codex/hooks/codex-reminder-hook.sh cancel-all\"",
             "timeout": 5
           }
         ]

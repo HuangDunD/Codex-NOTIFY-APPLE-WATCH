@@ -8,7 +8,9 @@ This repository backs up the Codex hooks that escalate unattended Codex completi
 - `hooks/codex-notify-wrapper.sh`: handles Codex legacy notify payloads and adds quota text.
 - `hooks/codex-stop-wrapper.sh`: handles Codex `Stop` hook payloads as the reliable completion trigger.
 - `hooks.json`: installs the `Stop` and `UserPromptSubmit` hooks.
-- `config.toml`: keeps the legacy `notify` chain to the wrapper as a compatibility fallback.
+- `config.example.toml`: optional legacy `notify` fallback template. Do not commit your real `~/.codex/config.toml`; it can contain local paths and project names.
+
+The committed hook files use `$HOME` so the repository does not expose a local macOS username.
 
 ## Current Behavior
 
@@ -25,7 +27,6 @@ mkdir -p ~/.codex/hooks
 cp hooks/*.sh ~/.codex/hooks/
 chmod +x ~/.codex/hooks/*.sh
 cp hooks.json ~/.codex/hooks.json
-cp config.toml ~/.codex/config.toml
 ```
 
-After restoring, restart Codex if the legacy `notify` path does not take effect immediately. The `Stop` hook in `hooks.json` should normally work without relying on that legacy reload.
+The `Stop` hook in `hooks.json` should normally work without relying on the legacy `notify` setting. If you also want the legacy notify fallback, copy the single `notify = ...` line from `config.example.toml` into your existing `~/.codex/config.toml` and replace `YOUR_USER`.

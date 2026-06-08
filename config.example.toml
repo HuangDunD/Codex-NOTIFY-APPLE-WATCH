@@ -1,0 +1,3 @@
+# Optional legacy notify fallback. Merge this one line into ~/.codex/config.toml
+# if you want to keep the old notify path in addition to hooks.json Stop.
+notify = ["/Users/YOUR_USER/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"\\/Users\\/YOUR_USER\\/.codex\\/hooks\\/codex-notify-wrapper.sh\"]"]

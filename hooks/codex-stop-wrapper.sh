@@ -2,7 +2,7 @@
 
 set -u
 
-NOTIFY_WRAPPER="/Users/hcy/.codex/hooks/codex-notify-wrapper.sh"
+NOTIFY_WRAPPER="$HOME/.codex/hooks/codex-notify-wrapper.sh"
 STATE_DIR="$HOME/.codex/hooks/state"
 LOG_FILE="$STATE_DIR/reminder-hook.log"
 

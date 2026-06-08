@@ -1,4 +1,5 @@
 hooks/state/
 work/
+config.toml
 *.log
 .DS_Store

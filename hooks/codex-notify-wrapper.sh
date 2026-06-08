@@ -2,7 +2,7 @@
 
 set -u
 
-REMINDER_HOOK="/Users/hcy/.codex/hooks/codex-reminder-hook.sh"
+REMINDER_HOOK="$HOME/.codex/hooks/codex-reminder-hook.sh"
 LOG_FILE="$HOME/.codex/hooks/state/reminder-hook.log"
 
 printf '%s received Codex notification: %s\n' "$(/bin/date '+%Y-%m-%d %H:%M:%S')" "$*" >> "$LOG_FILE"
