@@ -4,7 +4,7 @@ set -u
 
 STATE_DIR="$HOME/.codex/hooks/state"
 LOG_FILE="$STATE_DIR/reminder-hook.log"
-DELAY_SECONDS=60
+DELAY_SECONDS=30
 SCRIPT_PATH="${0:A}"
 REMINDER_LIST="Codex"
 
@@ -45,10 +45,10 @@ create_reminder() {
 
   if [[ "$kind" == "approval" ]]; then
     title="Codex 等待审批"
-    body="一分钟内未处理，请返回 Codex 审批。"
+    body="30 秒内未处理，请返回 Codex 审批。"
   else
     title="Codex 任务已完成"
-    body="一分钟内未查看，请返回 Codex 查看结果。"
+    body="30 秒内未查看，请返回 Codex 查看结果。"
     if [[ "$extra_body" =~ '5小时已用 '[0-9.]+%'（剩余 '([0-9.]+)%'）；每周已用 '[0-9.]+%'（剩余 '([0-9.]+)%'）' ]]; then
       title="Codex 完成｜5h剩${match[1]}%｜周剩${match[2]}%"
     fi

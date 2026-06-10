@@ -16,9 +16,9 @@ The committed hook files use `$HOME` so the repository does not expose a local m
 
 - If Codex is truly frontmost when a completion event arrives, no reminder is created.
 - If Codex is only visible through Stage Manager but not frontmost, a reminder is scheduled.
-- If Codex becomes frontmost within 60 seconds, the pending reminder is cancelled.
-- If a new prompt is submitted within 60 seconds, the pending reminder is cancelled.
-- If still unattended after 60 seconds, a Reminder is created in the `Codex` reminders list.
+- If Codex becomes frontmost within 30 seconds, the pending reminder is cancelled.
+- If a new prompt is submitted within 30 seconds, the pending reminder is cancelled.
+- If still unattended after 30 seconds, a Reminder is created in the `Codex` reminders list.
 
 ## Restore
 
