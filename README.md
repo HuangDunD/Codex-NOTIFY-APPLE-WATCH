@@ -18,6 +18,8 @@ The committed hook files use `$HOME` so the repository does not expose a local m
 - If Codex becomes frontmost within 60 seconds, the pending reminder is cancelled.
 - If a new prompt is submitted within 60 seconds, the pending reminder is cancelled.
 - If still unattended after 60 seconds, a Reminder is created in the `Codex` reminders list.
+- When a background completion is scheduled, the hook sets Codex's Dock badge to `1`.
+- The Dock badge is cleared when Codex becomes frontmost or a new prompt is submitted. It can remain after the 60-second Reminder is created, so the Dock still shows an unread completion until Codex is opened.
 
 ## Restore
 
