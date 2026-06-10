@@ -5,7 +5,6 @@ set -u
 STATE_DIR="$HOME/.codex/hooks/state"
 LOG_FILE="$STATE_DIR/reminder-hook.log"
 DELAY_SECONDS=60
-BADGE_WATCH_SECONDS=$((12 * 60 * 60))
 SCRIPT_PATH="${0:A}"
 REMINDER_LIST="Codex"
 
@@ -27,71 +26,16 @@ frontmost_file() {
   printf '%s/%s.frontmost\n' "$STATE_DIR" "$1"
 }
 
-badge_file() {
-  printf '%s/completion.badge\n' "$STATE_DIR"
-}
-
 is_codex_frontmost() {
   local bundle_id
   bundle_id="$(/usr/bin/osascript -e 'tell application "System Events" to get bundle identifier of first application process whose frontmost is true' 2>/dev/null)"
   [[ "$bundle_id" == "com.openai.codex" ]] && printf '1\n' || printf '0\n'
 }
 
-set_codex_dock_badge() {
-  if /usr/bin/lsappinfo setinfo -app com.openai.codex StatusLabel='{ "label"="1" }' >> "$LOG_FILE" 2>&1; then
-    log_message "set Codex dock badge"
-  else
-    log_message "failed to set Codex dock badge"
-  fi
-}
-
-clear_codex_dock_badge() {
-  if /usr/bin/lsappinfo setinfo -app com.openai.codex StatusLabel='{ "label"="" }' >> "$LOG_FILE" 2>&1; then
-    log_message "cleared Codex dock badge"
-  else
-    log_message "failed to clear Codex dock badge"
-  fi
-}
-
-clear_completion_badge() {
-  /bin/rm -f "$(badge_file)"
-  clear_codex_dock_badge
-}
-
 cancel_kind() {
   /bin/rm -f "$(pending_file "$1")"
   /bin/rm -f "$(body_file "$1")"
   /bin/rm -f "$(frontmost_file "$1")"
-}
-
-run_badge_worker() {
-  local token="$1"
-  local file
-  local elapsed=0
-  file="$(badge_file)"
-
-  while (( elapsed < BADGE_WATCH_SECONDS )); do
-    [[ -f "$file" ]] || exit 0
-    [[ "$(<"$file")" == "$token" ]] || exit 0
-
-    if [[ "$(is_codex_frontmost)" == "1" ]]; then
-      log_message "cleared completion dock badge: Codex became frontmost"
-      clear_completion_badge
-      exit 0
-    fi
-
-    /bin/sleep 2
-    (( elapsed += 2 ))
-  done
-
-  log_message "stopped completion dock badge watcher after timeout"
-}
-
-activate_completion_badge() {
-  local token="$1"
-  printf '%s\n' "$token" > "$(badge_file)"
-  set_codex_dock_badge
-  /usr/bin/nohup "$SCRIPT_PATH" badge-worker "$token" >> "$LOG_FILE" 2>&1 &
 }
 
 create_reminder() {
@@ -144,7 +88,6 @@ run_worker() {
        [[ "$(<"$(frontmost_file "$kind")")" == "0" ]] &&
        [[ "$(is_codex_frontmost)" == "1" ]]; then
       log_message "cancelled completion reminder: Codex became frontmost"
-      clear_completion_badge
       cancel_kind "$kind"
       exit 0
     fi
@@ -174,7 +117,6 @@ schedule_kind() {
 
   if [[ "$kind" == "completion" ]] && [[ "$(is_codex_frontmost)" == "1" ]]; then
     log_message "skipped completion reminder: Codex already frontmost"
-    clear_completion_badge
     cancel_kind "$kind"
     exit 0
   fi
@@ -187,7 +129,6 @@ schedule_kind() {
   else
     /bin/rm -f "$(body_file "$kind")"
   fi
-  [[ "$kind" == "completion" ]] && activate_completion_badge "$token"
   /usr/bin/nohup "$SCRIPT_PATH" worker "$kind" "$token" >> "$LOG_FILE" 2>&1 &
 }
 
@@ -205,13 +146,9 @@ case "${1:-}" in
   cancel-all)
     cancel_kind approval
     cancel_kind completion
-    clear_completion_badge
     ;;
   worker)
     run_worker "${2:?missing reminder kind}" "${3:?missing token}"
-    ;;
-  badge-worker)
-    run_badge_worker "${2:?missing badge token}"
     ;;
   *)
     log_message "unknown action: ${1:-empty}"
